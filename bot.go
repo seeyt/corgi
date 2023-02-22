@@ -20,9 +20,7 @@ type KeywordItem struct {
 
 type Bot struct {
 	Messages    chan *Context
-	commandFns  map[string]func(*Context)
 	messageFns  []func(*Context)
-	KeywordFns  []*KeywordItem
 	middleWares []func(*Context)
 	pusher      push.Pusher
 	scheduler   schedule.Scheduler
@@ -115,11 +113,9 @@ func (b *Bot) Run(addr, pattern string) {
 func New() *Bot {
 	botManage := &Bot{
 		Messages:    make(chan *Context, 10),
-		commandFns:  map[string]func(ctx *Context){},
 		messageFns:  []func(ctx *Context){},
 		middleWares: []func(*Context){},
 		pusher:      push.New(),
-		KeywordFns:  []*KeywordItem{},
 	}
 	return botManage
 }
